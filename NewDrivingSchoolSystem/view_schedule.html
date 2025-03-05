@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Schedule</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Scheduled Courses</h1>
+        <div id="schedule">
+            <!-- Schedule data will load here -->
+        </div>
+
+        <script>
+            fetch('../api/get-schedule.php')
+                .then(response => response.json())
+                .then(data => {
+                    const scheduleDiv = document.getElementById('schedule');
+                    data.forEach(schedule => {
+                        scheduleDiv.innerHTML += `
+                            <p>Course: ${schedule.course_name} - Date: ${schedule.schedule_date}</p>
+                        `;
+                    });
+                });
+        </script>
+    </div>
+</body>
+</html>

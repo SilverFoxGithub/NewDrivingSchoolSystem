@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracking</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Progress</h1>
+        <div id="progress">
+            <!-- Progress data will load here -->
+        </div>
+
+        <script>
+            fetch('../api/get_progress.php')
+                .then(response => response.json())
+                .then(data => {
+                    const progressDiv = document.getElementById('progress');
+                    data.forEach(progress => {
+                        progressDiv.innerHTML += `
+                            <p>Course: ${progress.course_name} - Completion: ${progress.completion_percentage}%</p>
+                        `;
+                    });
+                });
+        </script>
+    </div>
+</body>
+</html>

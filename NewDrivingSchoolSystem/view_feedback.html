@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Feedback</h1>
+        <div id="feedback">
+            <!-- Feedback data will load here -->
+        </div>
+
+        <script>
+            fetch('../api/get_feedback.php')
+                .then(response => response.json())
+                .then(data => {
+                    const feedbackDiv = document.getElementById('feedback');
+                    data.forEach(entry => {
+                        feedbackDiv.innerHTML += `
+                            <p>Instructor: ${entry.instructor_id} - Feedback: ${entry.feedback}</p>
+                        `;
+                    });
+                });
+        </script>
+    </div>
+</body>
+</html>
