@@ -3,23 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Driving School</title>
-    <link rel="stylesheet" href="assets/styles.css">
+    <title>Signup - MSSB Driving Institute</title>
+    <link rel="stylesheet" href="assets\styles\signup-style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Create Your Account</h1>
-        <form action="api/register.php" method="POST">
-            <input type="text" name="full_name" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <select name="role">
-                <option value="student">Student</option>
-                <option value="instructor">Instructor</option>
-                <option value="admin">Admin</option>
-            </select>
-            <button type="submit">Register</button>
-        </form>
-    </div>
+
+<div class="signup-container">
+    <h2>Create Your Account</h2>
+    <form action="api\register.php" method="POST" onsubmit="return validateForm()">
+        <input type="text" name="full_name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        
+        <input type="password" id="password" name="password" placeholder="Password" required onkeyup="checkPasswordStrength()">
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+        <select name="role" required>
+            <option value="" disabled selected>Select Role</option>
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <ul class="password-rules">
+            <li id="length" class="invalid">At least 8 characters</li>
+            <li id="letters" class="invalid">Contains letters</li>
+            <li id="numbers" class="invalid">Contains numbers</li>
+            <li id="special" class="invalid">Contains special characters</li>
+        </ul>
+
+        <button type="submit">Signup</button>
+
+        <p>Already have an account? <a href="index.html">Login here</a></p>
+    </form>
+</div>
+
+<script>
+    // Password strength check
+    function checkPasswordStrength() {
+        const password = document.getElementById("password").value;
+
+        document.getElementById("length").classList.toggle("valid", password.length >= 8);
+        document.getElementById("letters").classList.toggle("valid", /[a-zA-Z]/.test(password));
+        document.getElementById("numbers").classList.toggle("valid", /\d/.test(password));
+        document.getElementById("special").classList.toggle("valid", /[!@#$%^&*(),.?":{}|<>]/.test(password));
+    }
+
+    // Form validation
+    function validateForm() {
+        const lengthValid = document.getElementById("length").classList.contains("valid");
+        const lettersValid = document.getElementById("letters").classList.contains("valid");
+        const numbersValid = document.getElementById("numbers").classList.contains("valid");
+        const specialValid = document.getElementById("special").classList.contains("valid");
+
+        if (!(lengthValid && lettersValid && numbersValid && specialValid)) {
+            alert("Please meet all the password requirements.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </body>
 </html>
