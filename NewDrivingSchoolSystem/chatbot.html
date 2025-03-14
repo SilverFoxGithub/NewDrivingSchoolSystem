@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chatbot</title>
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles/chatbot-style.css">
 </head>
+
 <body>
     <div class="container">
-        <h1>Driving School Chatbot</h1>
-        <div id="chatbox">
-            <p><b>Bot:</b> Hello! Ask me anything about driving courses.</p>
-        </div>
-        <input type="text" id="userInput" placeholder="Type your question...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
+        <nav class="navbar">
+            <button class="nav-button" onclick="goToProgress()">View Progress</button>
+            <button class="nav-button" onclick="goToPayment()">Payment</button>
+            <button class="nav-button" onclick="goToDashboard()">Dashboard</button>
+            <button class="nav-button logout" onclick="logout()">Logout</button>
+            <div class="logo">
+                <img src="assets/logo.png" alt="MSSB Logo">
+            </div>
+        </nav>
 
-    <script>
-        function sendMessage() {
-            const input = document.getElementById('userInput').value;
-            fetch('api/chatbot.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: input })
-            })
-            .then(response => response.text())
-            .then(data => {
-                const chatbox = document.getElementById('chatbox');
-                chatbox.innerHTML += `<p><b>You:</b> ${input}</p>`;
-                chatbox.innerHTML += `<p><b>Bot:</b> ${data}</p>`;
-                document.getElementById('userInput').value = '';
-            });
-        }
-    </script>
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Type your message..." onkeydown="handleKeyDown(event)">
+                <button id="send-button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="assets/chatbot.js"></script>
 </body>
 </html>
